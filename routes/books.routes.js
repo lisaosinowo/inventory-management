@@ -1,21 +1,6 @@
 const express = require("express");
-const mongoose = require("mongoose");
-
 const router = express.Router(); // this will create a new router object that we can use to define our routes
-
-const bookSchema = mongoose.Schema({
-  bookName: {
-    type: String,
-    required: true,
-  },
-  countInStock: {
-    type: Number,
-    required: true,
-  },
-}); // if this is left empty when creating a post request, only the _id will be created in the database
-// if we add some fields to the schema, then those fields will also be created in the database when we create a new book
-
-const BookModel = mongoose.model("Book", bookSchema);
+const BookModel = require("../models/Book.model")
 
 router.post("/", async (req, res) => {
   try {
