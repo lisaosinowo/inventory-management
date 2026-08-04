@@ -77,3 +77,24 @@ app.delete("/books/:id", async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
+app.put("/books/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedBook = await BookModel.findByIdAndUpdate(id, req.body, { new: true });
+    /* findByIdAndUpdate takes in three parameters: 
+    1. The id of the book to be updated (id)
+    2. The new data to update the book with (req.body)
+    3. An options object ({ new: true }) */
+
+    // The { new: true } option tells Mongoose to return the updated document instead of the original document.
+
+    if (!updatedBook) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    res.status(200).json({ message: "Book updated successfully", updatedBook });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
