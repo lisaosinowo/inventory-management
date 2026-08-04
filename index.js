@@ -47,3 +47,33 @@ app.get("/books", async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
+app.get("/books/:id", async (req, res) => {
+  try {
+    const { id } = req.params; // this will get the id from the url
+    const book = await BookModel.findById(id); // this will return the book with the given id
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    res.status(200).send(book); // this will return the book as a response to the user
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+app.delete("/books/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedBook = await BookModel.findByIdAndDelete(id);
+
+    if (!deletedBook) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    res.status(200).json({ message: "Book deleted successfully" });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
