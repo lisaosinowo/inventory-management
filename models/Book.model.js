@@ -3,12 +3,34 @@ const mongoose = require("mongoose");
 const bookSchema = mongoose.Schema({
   bookName: {
     type: String,
-    required: true,
+        required: [true, "Book name is required"], 
+    minlength: [3, "Book name must be at least 3 characters long"],
+    maxlength: [100, "Book name must be at most 100 characters long"],
   },
   countInStock: {
     type: Number,
-    required: true,
-  },
+      required: [true, "Count in stock is required"],
+    min: [1, "Count in stock must be at least 1"],
+    max: [255, "Count in stock must be at most 255"],
+    },
+    price: {
+      type: Number,
+      required: [true, "Price is required"],
+      min: [1, "Price must be at least 1"],
+      max: [10000, "Price must be at most 10000"],
+    }, 
+    dateCreated: {
+        type: Date,
+        default: Date.now,
+    },
+    image: {
+        type: String,
+        default: "",
+        validate: {
+            validator: v => !v ? true : /^https?:\/\/.+/.test(v), // this tests if the string starts with http:// or https:// and has at least one character after that
+            message: "Please enter a valid image URL"
+        }, 
+    }
 }); // if this is left empty when creating a post request, only the _id will be created in the database
 // if we add some fields to the schema, then those fields will also be created in the database when we create a new book
 
