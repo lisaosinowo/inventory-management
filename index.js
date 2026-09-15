@@ -1,13 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const port = 3000;
+const port = 4000;
 require("dotenv").config();
 const bookRouter = require("./routes/books.routes");
 const connection = process.env.CONNECTION_STRING;
 mongoose
   .connect(connection)
-  .then(() => console.log("Connected to MongoDB"))
+  .then(() => console.log("Connected to MongoDB :)"))
   .catch((err) => console.log(err));
 
 app.use(express.json()); // this is a middleware that will dissect the body of the request and make it available in req.body
