@@ -1,5 +1,4 @@
 import { test, expect } from "@playwright/test";
-import BookModel from "../models/Book.model";
 
 test.beforeEach(async ({ request }) => {});
 
